@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Personal Command Centre"
+description = "A personal productivity dashboard for managing daily tasks, goals, study sessions, habits, notes, and focus time with reliable browser-based persistence."
+version = "1.0.0"
+id = "artifacts/personal-command-centre"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18982
+
+[services.development]
+run = "pnpm --filter @workspace/personal-command-centre run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/personal-command-centre", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/personal-command-centre/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18982"
+BASE_PATH = "/"
